@@ -2,16 +2,6 @@ import java.util.Scanner;
 
 
 public class RunHashSet {
-    public static void deleteStudent() {
-        Scanner sc = new Scanner(System.in);
-        StudentHashSet set = new StudentHashSet();
-
-        String id;
-        System.out.println("Enter student id: " );
-        id = sc.nextLine();
-        set.delete(id);
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -52,10 +42,14 @@ public class RunHashSet {
                 set.findByName(name);
             }
             else if (choose == 7) {
-                deleteStudent();
-//                System.out.println("Insert Student ID: "); String id = sc.nextLine();
-//                Student student = new Student(id);
-//                System.out.println("Delete Student in the list: " + set.deleteById(student));
+//                deleteStudent();
+                System.out.println("Insert Student ID: "); String id = sc.nextLine();
+                Student student = new Student(id);
+                System.out.println("Delete Student in the list: " + set.remove(id));
+            }
+            else if (choose == 8) {
+                set.sortMark();
+                set.printStudentList();
             }
         }while (choose != 0);
     }

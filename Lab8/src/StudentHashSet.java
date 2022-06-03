@@ -1,8 +1,9 @@
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StudentHashSet {
     HashSet<Student> set = new HashSet<>();
+    List<Student> list = new ArrayList<>(set);
     Scanner sc = new Scanner(System.in);
 
     public StudentHashSet() {
@@ -37,11 +38,7 @@ public class StudentHashSet {
         }
     }
 
-    public void deleteAll() {
-        this.set.removeAll(set);
-    }
-
-    public void delete(String id) {
+    public void deleteById(String id) {
         boolean found = false;
         for (Student student :
                 set) {
@@ -53,11 +50,26 @@ public class StudentHashSet {
                     set.remove(student);
                 found = true;
             }
+            else {
+                System.out.println("Cannot finding this student: " + id);
+                found = false;
+            }
         }
     }
 
-    public boolean deleteById(Student student) {
-        return this.set.remove(student);
+    public boolean remove(String id) {
+        Student student = this.set.stream()
+                .filter(student1 -> student1.getId().equals(id))
+                .findFirst().orElse(null);
+        if (student == null) {
+            return false;
+        }
+        this.set.remove(student);
+        return true;
+    }
+
+    public void deleteAll() {
+        this.set.removeAll(set);
     }
 
     public void findByName(String name) {
@@ -69,4 +81,26 @@ public class StudentHashSet {
         }
     }
 
+    public void sortMark() {
+        Collections.sort(this.list, new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                if (o1.getMark() > o2.getMark()) {
+                    return -1;
+                }
+                else if (o1.getMark() < o2.getMark()) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+        });
+        for (Student student :
+                list) {
+            System.out.println("After Sorting" + list);
+        }
+    }
+
 }
+
